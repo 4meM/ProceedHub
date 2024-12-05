@@ -6,7 +6,6 @@ import com.mistysoft.proceedhub.modules.scholarship.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.Set;
 import java.util.UUID;
 
 @Service

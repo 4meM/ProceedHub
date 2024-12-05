@@ -3,6 +3,10 @@ package com.mistysoft.proceedhub.modules.scholarship.infrastructure;
 import com.mistysoft.proceedhub.modules.scholarship.domain.*;
 
 public class ScholarshipMapper {
+
+    private ScholarshipMapper() {
+        throw new UnsupportedOperationException("This is a utility class, cannot be instantiated");
+    }
     
     public static ScholarshipEntity toEntity(Scholarship scholarship) {
         ScholarshipEntity entity = new ScholarshipEntity();
