@@ -6,7 +6,7 @@ public class ScholarshipMapper {
     
     public static ScholarshipEntity toEntity(Scholarship scholarship) {
         ScholarshipEntity entity = new ScholarshipEntity();
-        entity.setId(scholarship.getId().getValue());
+        entity.setId(scholarship.getId());
         entity.setTitle(scholarship.getTitle());
         entity.setDescription(scholarship.getDescription());
         entity.setDate(scholarship.getDate());
@@ -20,7 +20,7 @@ public class ScholarshipMapper {
 
     public static Scholarship toDomain(ScholarshipEntity entity) {
         return new Scholarship(
-                new ScholarshipId(entity.getId()),
+                entity.getId(),
                 entity.getTitle(),
                 entity.getDescription(),
                 entity.getDate(),
