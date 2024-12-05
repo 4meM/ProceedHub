@@ -19,17 +19,17 @@ public class ScholarshipMapper {
     }
 
     public static Scholarship toDomain(ScholarshipEntity entity) {
-        return new Scholarship(
-                entity.getId(),
-                entity.getTitle(),
-                entity.getDescription(),
-                entity.getDate(),
-                entity.getImage(),
-                entity.getCountry(),
-                entity.getContinent(),
-                entity.getMoreInfo(),
-                entity.getRequirements()
-        );
+        return Scholarship.builder()
+                .id(entity.getId())
+                .title(entity.getTitle())
+                .description(entity.getDescription())
+                .date(entity.getDate())
+                .image(entity.getImage())
+                .country(entity.getCountry())
+                .continent(entity.getContinent())
+                .moreInfo(entity.getMoreInfo())
+                .requirements(entity.getRequirements())
+                .build();
     }
 
 }

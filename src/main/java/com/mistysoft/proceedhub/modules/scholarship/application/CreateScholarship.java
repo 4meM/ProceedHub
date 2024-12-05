@@ -1,5 +1,6 @@
 package com.mistysoft.proceedhub.modules.scholarship.application;
 
+import com.mistysoft.proceedhub.modules.scholarship.application.dto.CreateScholarshipRequest;
 import com.mistysoft.proceedhub.modules.scholarship.domain.*;
 
 import org.springframework.stereotype.Service;
@@ -17,9 +18,19 @@ public class CreateScholarship {
         this.scholarshipRepository = scholarshipRepository;
     }
 
-    public Scholarship execute(String title, String description, ZonedDateTime date, String image, String country, String continent, String moreInfo, Set<Requirement> requirements) {
+    public Scholarship execute(CreateScholarshipRequest request) {
         String id = UUID.randomUUID().toString();
-        Scholarship scholarship = new Scholarship(id, title, description, date, image, country, continent, moreInfo, requirements);
+        Scholarship scholarship = Scholarship.builder()
+                .id(id)
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .date(ZonedDateTime.now())
+                .image(request.getImage())
+                .country(request.getCountry())
+                .continent(request.getContinent())
+                .moreInfo(request.getMoreInfo())
+                .requirements(request.getRequirements())
+                .build();
         scholarshipRepository.save(scholarship);
         return scholarship;
     }

@@ -1,14 +1,15 @@
-package com.mistysoft.proceedhub.modules.scholarship.domain;
+package com.mistysoft.proceedhub.modules.scholarship.application.dto;
 
+import com.mistysoft.proceedhub.modules.scholarship.domain.Requirement;
 import lombok.Builder;
 import lombok.Getter;
-import java.util.Set;
+
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 @Getter
 @Builder
-public class Scholarship {
-    private final String id;
+public class CreateScholarshipRequest {
     private final String title;
     private final String description;
     private final ZonedDateTime date;
@@ -17,5 +18,4 @@ public class Scholarship {
     private final String continent;
     private final String moreInfo;
     private final Set<Requirement> requirements;
-
 }
