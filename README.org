@@ -6,7 +6,7 @@ Este proyecto es el backend de ProceedHub que sera para la aplicación web HAMUK
 
 ** Requisitos
 
-- Java 17 o superior
+- Java 21 o superior
 - Gradle 7.5 o superior
 
 ** Configuración del Proyecto
