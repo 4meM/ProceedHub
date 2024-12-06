@@ -28,8 +28,13 @@ public class RegisterUser {
         UserId userId = new UserId(UUID.randomUUID().toString());
         String hashedPassword = passwordEncoder.encode(rawPassword);
 
-        User user = new User(userId, username, email, hashedPassword, roles);
-
+        User user = User.builder()
+            .id(userId)
+            .username(username)
+            .email(email)
+            .password(hashedPassword)
+            .roles(roles)
+            .build();
         userRepository.save(user);
         return user;
     }

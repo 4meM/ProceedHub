@@ -13,11 +13,12 @@ public class UserDTO {
     private final String username;
     private final String email;
     private final Set<Role> roles;
-
+    
     public UserDTO(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.roles = user.getRoles();
     }
+
 }

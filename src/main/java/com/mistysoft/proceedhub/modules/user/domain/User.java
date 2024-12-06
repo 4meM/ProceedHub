@@ -1,22 +1,16 @@
 package com.mistysoft.proceedhub.modules.user.domain;
 
 import lombok.Getter;
+import lombok.Builder;
 
 import java.util.Set;
 
 @Getter
+@Builder
 public class User {
     private final UserId id;
     private final String username;
     private final String email;
     private final String password;
     private final Set<Role> roles;
-
-    public User(UserId id, String username, String email, String password, Set<Role> roles) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-    }
 }
