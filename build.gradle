@@ -58,3 +58,9 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+task copyDependencies(type: Copy) {
+    from configurations.compileClasspath
+    into "build/libs"
+}
+
