@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Getter
 @Builder
-public class CreateScholarshipRequest {
+public class CreateScholarshipDTO {
     private final String title;
     private final String description;
     private final ZonedDateTime date;

@@ -1,6 +1,6 @@
 package com.mistysoft.proceedhub.modules.scholarship.application;
 
-import com.mistysoft.proceedhub.modules.scholarship.application.dto.CreateScholarshipRequest;
+import com.mistysoft.proceedhub.modules.scholarship.application.dto.CreateScholarshipDTO;
 import com.mistysoft.proceedhub.modules.scholarship.domain.*;
 
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class CreateScholarship {
         this.scholarshipRepository = scholarshipRepository;
     }
 
-    public Scholarship execute(CreateScholarshipRequest request) {
+    public Scholarship execute(CreateScholarshipDTO request) {
         String id = UUID.randomUUID().toString();
         Scholarship scholarship = Scholarship.builder()
                 .id(id)
