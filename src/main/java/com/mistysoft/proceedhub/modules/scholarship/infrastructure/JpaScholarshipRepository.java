@@ -4,6 +4,8 @@ import com.mistysoft.proceedhub.modules.scholarship.domain.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional; 
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository 
 public class JpaScholarshipRepository implements ScholarshipRepository {
@@ -24,5 +26,13 @@ public class JpaScholarshipRepository implements ScholarshipRepository {
     public Optional<Scholarship> findById(String id) {
         return repository.findById(id)
                 .map(ScholarshipMapper::toDomain);
+    }
+
+    @Override
+    public List<Scholarship> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(ScholarshipMapper::toDomain)
+                .collect(Collectors.toList());
     }
 }
