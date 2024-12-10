@@ -8,6 +8,8 @@ class ProceedHubApplicationTests {
 
     @Test
     void contextLoads() {
+        // Este metodo no esta implementado porque no hay logica de prueba especifica.
+        throw new UnsupportedOperationException("Metodo no implementado");
     }
 
 }
