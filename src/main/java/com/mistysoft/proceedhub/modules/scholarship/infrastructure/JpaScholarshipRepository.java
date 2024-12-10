@@ -35,4 +35,9 @@ public class JpaScholarshipRepository implements ScholarshipRepository {
                 .map(ScholarshipMapper::toDomain)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteById(String id) {
+        repository.deleteById(id);
+    }
 }
