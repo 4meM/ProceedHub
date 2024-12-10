@@ -45,4 +45,17 @@ class JpaUserRepositoryTest {
         verify(repository).save(userEntityCaptor.capture());
         assertEquals(userEntity, userEntityCaptor.getValue());
     }
+
+    @Test
+    void findByUsername() {
+        String username = "username";
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(username);
+        when(repository.findByUsername(username)).thenReturn(Optional.of(userEntity));
+
+        Optional<User> result = jpaUserRepository.findByUsername(username);
+
+        assertTrue(result.isPresent());
+        assertEquals(username, result.get().getUsername());
+    }
 }
