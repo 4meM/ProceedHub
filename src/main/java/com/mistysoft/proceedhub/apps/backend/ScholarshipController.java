@@ -14,11 +14,13 @@ public class ScholarshipController {
     private final CreateScholarship createScholarship;
     private final UpdateScholarship updateScholarship;
     private final GetAllScholarships getAllScholarships;
+    private final SearchScholarship searchScholarship;
 
-    public ScholarshipController(CreateScholarship createScholarship, UpdateScholarship updateScholarship, GetAllScholarships getAllScholarships) {
+    public ScholarshipController(CreateScholarship createScholarship, UpdateScholarship updateScholarship, GetAllScholarships getAllScholarships, SearchScholarship searchScholarship) {
         this.createScholarship = createScholarship;
         this.updateScholarship = updateScholarship;
         this.getAllScholarships = getAllScholarships;
+        this.searchScholarship = searchScholarship;
     }
 
     @PostMapping("/create")
@@ -27,9 +29,9 @@ public class ScholarshipController {
         return new ResponseEntity<>("Scholarship created successfully", HttpStatus.CREATED);
     }
 
-    @PostMapping("/get_by_id")
+    @GetMapping("/get_by_id")
     public ResponseEntity<String> getScholarshipById(@RequestBody String id) {
-        // getScholarshipById.execute(id);
+        searchScholarship.execute(id);
         return new ResponseEntity<>("Scholarship retrieved successfully", HttpStatus.OK);
     }
 
