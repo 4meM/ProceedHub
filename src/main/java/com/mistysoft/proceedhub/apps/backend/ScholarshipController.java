@@ -1,25 +1,58 @@
 package com.mistysoft.proceedhub.apps.backend;
 
-import com.mistysoft.proceedhub.modules.scholarship.application.CreateScholarship;
-import com.mistysoft.proceedhub.modules.scholarship.application.dto.CreateScholarshipDTO;
+import com.mistysoft.proceedhub.modules.scholarship.application.*;
+import com.mistysoft.proceedhub.modules.scholarship.application.dto.ScholarshipDTO;
+import com.mistysoft.proceedhub.modules.scholarship.domain.Scholarship;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/scholarships")
 public class ScholarshipController {
+
     private final CreateScholarship createScholarship;
-    public ScholarshipController(CreateScholarship createScholarship) {
+    private final UpdateScholarship updateScholarship;
+    private final GetAllScholarships getAllScholarships;
+    private final SearchScholarship searchScholarship;
+    private final DeleteScholarship deleteScholarship; 
+
+    public ScholarshipController(CreateScholarship createScholarship, UpdateScholarship updateScholarship, GetAllScholarships getAllScholarships, SearchScholarship searchScholarship, DeleteScholarship deleteScholarship) {
         this.createScholarship = createScholarship;
+        this.updateScholarship = updateScholarship;
+        this.getAllScholarships = getAllScholarships;
+        this.searchScholarship = searchScholarship;
+        this.deleteScholarship = deleteScholarship; 
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createScholarship(@RequestBody CreateScholarshipDTO scholarship) {
+    public ResponseEntity<String> createScholarship(@RequestBody ScholarshipDTO scholarship) {
         createScholarship.execute(scholarship);
         return new ResponseEntity<>("Scholarship created successfully", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Scholarship> getScholarshipById(@PathVariable String id) {
+        Scholarship scholarship = searchScholarship.execute(id);
+        return new ResponseEntity<>(scholarship, HttpStatus.OK);
+    }
+
+    @GetMapping("/get_all")
+    public ResponseEntity<String> getAllScholarships() {
+        getAllScholarships.execute();
+        return new ResponseEntity<>("Scholarships retrieved successfully", HttpStatus.OK);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<String> updateScholarship(@RequestBody ScholarshipDTO scholarship){
+        updateScholarship.execute(scholarship);
+        return new ResponseEntity<>("Scholarship updated successfully", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteScholarship(@PathVariable String id) {
+        deleteScholarship.execute(id); 
+        return new ResponseEntity<>("Scholarship deleted successfully", HttpStatus.OK);
     }
 }
