@@ -16,14 +16,14 @@ public class ScholarshipController {
     private final UpdateScholarship updateScholarship;
     private final GetAllScholarships getAllScholarships;
     private final SearchScholarship searchScholarship;
-    private final DeleteScholarship deleteScholarship;
+    private final DeleteScholarship deleteScholarship; 
 
     public ScholarshipController(CreateScholarship createScholarship, UpdateScholarship updateScholarship, GetAllScholarships getAllScholarships, SearchScholarship searchScholarship, DeleteScholarship deleteScholarship) {
         this.createScholarship = createScholarship;
         this.updateScholarship = updateScholarship;
         this.getAllScholarships = getAllScholarships;
         this.searchScholarship = searchScholarship;
-        this.deleteScholarship = deleteScholarship;
+        this.deleteScholarship = deleteScholarship; 
     }
 
     @PostMapping("/create")
@@ -52,7 +52,7 @@ public class ScholarshipController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteScholarship(@PathVariable String id) {
-        deleteScholarship.execute(id);
+        deleteScholarship.execute(id); 
         return new ResponseEntity<>("Scholarship deleted successfully", HttpStatus.OK);
     }
 }
