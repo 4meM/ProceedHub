@@ -17,8 +17,7 @@ public class UpdateScholarship {
         this.scholarshipRepository = scholarshipRepository;
     }
 
-    public Scholarship execute(ScholarshipDTO request) {
-        String id = request.getId();
+    public Scholarship execute(ScholarshipDTO request, String id) {
         Optional<Scholarship> updatedScholarship =  scholarshipRepository.findById(id);
         if( updatedScholarship.isEmpty() ){
             throw new IllegalArgumentException("Scholarship with this id does not exist");
@@ -26,6 +25,7 @@ public class UpdateScholarship {
 
         Scholarship beforeScholarship = updatedScholarship.get();
         Scholarship scholarship = Scholarship.builder()
+            .id(id)
             .title(request.getTitle() != null && !request.getTitle().isBlank() ? request.getTitle() : beforeScholarship.getTitle())
             .description(request.getDescription() != null && !request.getDescription().isBlank() ? request.getDescription() : beforeScholarship.getDescription())
             .date(request.getDate() != null ? request.getDate() : beforeScholarship.getDate())

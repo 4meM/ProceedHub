@@ -44,9 +44,9 @@ public class ScholarshipController {
         return new ResponseEntity<>("Scholarships retrieved successfully", HttpStatus.OK);
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<String> updateScholarship(@RequestBody ScholarshipDTO scholarship){
-        updateScholarship.execute(scholarship);
+    @PostMapping("/update/{id}")
+    public ResponseEntity<String> updateScholarship(@RequestBody ScholarshipDTO scholarship, @PathVariable String id) {
+        updateScholarship.execute(scholarship, id);
         return new ResponseEntity<>("Scholarship updated successfully", HttpStatus.OK);
     }
 
