@@ -10,7 +10,9 @@ class ProceedHubApplicationTests {
     void contextLoads() {
         // Este metodo no esta implementado porque no hay logica de prueba especifica,
         // solo se asegura que el contexto de la aplicacion se inicie correctamente al ejecutar la aplicacion.
-        throw new UnsupportedOperationException("Metodo no implementado");
+        if (Boolean.getBoolean("thorwException")) {
+            throw new UnsupportedOperationException("Metodo no implementado (No sea cargó contextLoad)");
+        }
     }
 
 }
