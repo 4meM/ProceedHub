@@ -8,7 +8,6 @@ import com.mistysoft.proceedhub.modules.user.application.dto.UserDTO;
 import com.mistysoft.proceedhub.modules.user.domain.User;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,6 @@ public class UserController {
     private final SearchUser searchUser;
     private final JwtUtil jwtUtil;
 
-    @Autowired
     public UserController(RegisterUser registerUser, LoginUser loginUser, SearchUser searchUser, JwtUtil jwtUtil) {
         this.registerUser = registerUser;
         this.loginUser = loginUser;

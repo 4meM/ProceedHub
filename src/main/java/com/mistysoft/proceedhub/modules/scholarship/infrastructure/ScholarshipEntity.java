@@ -13,6 +13,7 @@ import java.util.Set;
 public class ScholarshipEntity {
 
     @Id
+    @Column(name = "id", nullable = false)
     private String id;
 
     @Column(nullable = false)
