@@ -33,7 +33,7 @@ public class JpaScholarshipRepository implements ScholarshipRepository {
         return repository.findAll()
                 .stream()
                 .map(ScholarshipMapper::toDomain)
-                .collect(Collectors.toList()); //Code smell
+                .toList();
     }
 
     @Override
