@@ -7,11 +7,11 @@ import java.util.Optional;
 import java.util.List;
 
 @Repository 
-public class JpaScholarshipRepository implements ScholarshipRepository {
+public class JpaScholarshipRepository implements IScholarshipRepository {
     
-    private final SpringDataScholarshipRepository repository;
+    private final ISpringDataScholarshipRepository repository;
 
-    public JpaScholarshipRepository(SpringDataScholarshipRepository repository) {
+    public JpaScholarshipRepository(ISpringDataScholarshipRepository repository) {
         this.repository = repository;
     }
 

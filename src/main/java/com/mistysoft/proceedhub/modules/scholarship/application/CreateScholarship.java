@@ -11,9 +11,9 @@ import java.util.UUID;
 @Service
 public class CreateScholarship {
 
-    private final ScholarshipRepository scholarshipRepository;
+    private final IScholarshipRepository scholarshipRepository;
 
-    public CreateScholarship(ScholarshipRepository scholarshipRepository) {
+    public CreateScholarship(IScholarshipRepository scholarshipRepository) {
         this.scholarshipRepository = scholarshipRepository;
     }
 

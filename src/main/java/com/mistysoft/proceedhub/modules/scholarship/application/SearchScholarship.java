@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SearchScholarship {
 
-    private final ScholarshipRepository scholarshipRepository;
-    public SearchScholarship(ScholarshipRepository scholarshipRepository) {
+    private final IScholarshipRepository scholarshipRepository;
+    public SearchScholarship(IScholarshipRepository scholarshipRepository) {
         this.scholarshipRepository = scholarshipRepository;
     }
 

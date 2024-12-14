@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 class JpaScholarshipRepositoryTest {
 
     @Mock
-    private SpringDataScholarshipRepository repository;
+    private ISpringDataScholarshipRepository repository;
 
     @InjectMocks
     private JpaScholarshipRepository jpaScholarshipRepository;

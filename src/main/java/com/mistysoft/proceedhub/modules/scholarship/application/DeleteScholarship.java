@@ -1,15 +1,15 @@
 package com.mistysoft.proceedhub.modules.scholarship.application;
 
-import com.mistysoft.proceedhub.modules.scholarship.domain.ScholarshipRepository;
+import com.mistysoft.proceedhub.modules.scholarship.domain.IScholarshipRepository;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class DeleteScholarship {
     
-    private final ScholarshipRepository scholarshipRepository;
+    private final IScholarshipRepository scholarshipRepository;
 
-    public DeleteScholarship(ScholarshipRepository scholarshipRepository) {
+    public DeleteScholarship(IScholarshipRepository scholarshipRepository) {
         this.scholarshipRepository = scholarshipRepository; 
     }
 

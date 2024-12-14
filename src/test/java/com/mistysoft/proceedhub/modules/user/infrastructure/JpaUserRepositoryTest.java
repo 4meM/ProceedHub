@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 class JpaUserRepositoryTest {
 
     @Mock
-    private SpringDataUserRepository repository;
+    private ISpringDataUserRepository repository;
 
     @InjectMocks
     private JpaUserRepository jpaUserRepository;

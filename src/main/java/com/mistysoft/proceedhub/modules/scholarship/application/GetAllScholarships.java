@@ -7,9 +7,9 @@ import java.util.List;
 @Service
 public class GetAllScholarships {
     
-    private final ScholarshipRepository scholarshipRepository;
+    private final IScholarshipRepository scholarshipRepository;
 
-    public GetAllScholarships(ScholarshipRepository scholarshipRepository) {
+    public GetAllScholarships(IScholarshipRepository scholarshipRepository) {
         this.scholarshipRepository = scholarshipRepository;
     }
 

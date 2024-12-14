@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class JpaUserRepository implements UserRepository {
+public class JpaUserRepository implements IUserRepository {
 
-    private final SpringDataUserRepository repository;
+    private final ISpringDataUserRepository repository;
 
-    public JpaUserRepository(SpringDataUserRepository repository) {
+    public JpaUserRepository(ISpringDataUserRepository repository) {
         this.repository = repository;
     }
 

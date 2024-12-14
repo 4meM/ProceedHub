@@ -7,9 +7,9 @@ import java.util.Optional;
 
 @Service
 public class SearchUser {
-    private final UserRepository userRepository;
+    private final IUserRepository userRepository;
 
-    public SearchUser(UserRepository userRepository) {
+    public SearchUser(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

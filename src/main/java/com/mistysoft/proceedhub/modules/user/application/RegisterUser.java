@@ -11,11 +11,11 @@ import java.util.UUID;
 @Service
 public class RegisterUser {
 
-    private final UserRepository userRepository;
+    private final IUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
 
-    public RegisterUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public RegisterUser(IUserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }

@@ -4,16 +4,16 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.mistysoft.proceedhub.modules.scholarship.domain.ScholarshipRepository;
+import com.mistysoft.proceedhub.modules.scholarship.domain.IScholarshipRepository;
 import com.mistysoft.proceedhub.modules.scholarship.application.dto.ScholarshipDTO;
 import com.mistysoft.proceedhub.modules.scholarship.domain.Scholarship;
 
 @Service
 public class UpdateScholarship {
     
-    private final ScholarshipRepository scholarshipRepository;
+    private final IScholarshipRepository scholarshipRepository;
 
-    public UpdateScholarship(ScholarshipRepository scholarshipRepository) {
+    public UpdateScholarship(IScholarshipRepository scholarshipRepository) {
         this.scholarshipRepository = scholarshipRepository;
     }
 
