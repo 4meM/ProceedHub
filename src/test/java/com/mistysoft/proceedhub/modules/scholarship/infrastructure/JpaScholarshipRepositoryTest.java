@@ -46,7 +46,7 @@ class JpaScholarshipRepositoryTest {
     }
 
     @Test
-    void findById() {
+    void testFindById() {
         String id = "id";
         ScholarshipEntity scholarshipEntity = new ScholarshipEntity();
         scholarshipEntity.setId(id);
