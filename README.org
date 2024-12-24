@@ -32,18 +32,20 @@ cd proceedhub-backend
 
 ** Endpoints
 
-*** Crear Usuario
+*** UserController
 
-- URL: /users
+**** Registrar Usuario
+
+- URL: /api/users/register
 - Método: POST
 - Cuerpo de la Solicitud:
 
 #+begin_src json
 {
-  "username": "nombre_usuario",
-  "email": "correo@ejemplo.com",
-  "password": "contraseña",
-  "roles": ["ROLE_USER"]
+  "username": "string",
+  "email": "string",
+  "password": "string",
+  "roles": ["string"]
 }
 #+end_src
 
@@ -55,15 +57,172 @@ cd proceedhub-backend
 }
 #+end_src
 
-*** Obtener Todos los Usuarios
+**** Iniciar Sesión
 
-- URL: /users
-- Método: GET
+- URL: /api/users/login
+- Método: POST
+- Cuerpo de la Solicitud:
+
+#+begin_src json
+{
+  "username": "string",
+  "password": "string"
+}
+#+end_src
+
 - Respuesta Exitosa:
 
 #+begin_src json
 {
-  "message": "Aqui todos los ususarios papu"
+  "message": "Login successful"
+}
+#+end_src
+
+**** Obtener Usuario por Nombre de Usuario
+
+- URL: /api/users/{username}
+- Método: GET
+- Parámetros de Ruta:
+  - username (string): El nombre de usuario del usuario.
+
+- Respuesta Exitosa:
+
+#+begin_src json
+{
+  "username": "string",
+  "email": "string",
+  "roles": ["string"]
+}
+#+end_src
+
+- Respuesta de Error:
+
+#+begin_src json
+{
+  "message": "User not found"
+}
+#+end_src
+
+*** ScholarshipController
+
+**** Crear Beca
+
+- URL: /api/scholarships
+- Método: POST
+- Cuerpo de la Solicitud:
+
+#+begin_src json
+{
+  "name": "string",
+  "description": "string",
+  "amount": "number"
+}
+#+end_src
+
+- Respuesta Exitosa:
+
+#+begin_src json
+{
+  "message": "Scholarship created successfully"
+}
+#+end_src
+
+**** Obtener Todas las Becas
+
+- URL: /api/scholarships
+- Método: GET
+- Respuesta Exitosa:
+
+#+begin_src json
+[
+  {
+    "id": "integer",
+    "name": "string",
+    "description": "string",
+    "amount": "number"
+  }
+]
+#+end_src
+
+**** Obtener Beca por ID
+
+- URL: /api/scholarships/{id}
+- Método: GET
+- Parámetros de Ruta:
+  - id (integer): El ID de la beca.
+
+- Respuesta Exitosa:
+
+#+begin_src json
+{
+  "id": "integer",
+  "name": "string",
+  "description": "string",
+  "amount": "number"
+}
+#+end_src
+
+- Respuesta de Error:
+
+#+begin_src json
+{
+  "message": "Scholarship not found"
+}
+#+end_src
+
+**** Actualizar Beca por ID
+
+- URL: /api/scholarships/{id}
+- Método: PUT
+- Parámetros de Ruta:
+  - id (integer): El ID de la beca.
+
+- Cuerpo de la Solicitud:
+
+#+begin_src json
+{
+  "name": "string",
+  "description": "string",
+  "amount": "number"
+}
+#+end_src
+
+- Respuesta Exitosa:
+
+#+begin_src json
+{
+  "message": "Scholarship updated successfully"
+}
+#+end_src
+
+- Respuesta de Error:
+
+#+begin_src json
+{
+  "message": "Scholarship not found"
+}
+#+end_src
+
+**** Eliminar Beca por ID
+
+- URL: /api/scholarships/{id}
+- Método: DELETE
+- Parámetros de Ruta:
+  - id (integer): El ID de la beca.
+
+- Respuesta Exitosa:
+
+#+begin_src json
+{
+  "message": "Scholarship deleted successfully"
+}
+#+end_src
+
+- Respuesta de Error:
+
+#+begin_src json
+{
+  "message": "Scholarship not found"
 }
 #+end_src
 
