@@ -107,7 +107,7 @@ cd proceedhub-backend
 
 **** Crear Beca
 
-- URL: /api/scholarships
+- URL: /api/scholarships/create
 - Método: POST
 - Cuerpo de la Solicitud:
 
@@ -129,7 +129,7 @@ cd proceedhub-backend
 
 **** Obtener Todas las Becas
 
-- URL: /api/scholarships
+- URL: /api/scholarships/get_all
 - Método: GET
 - Respuesta Exitosa:
 
@@ -172,7 +172,7 @@ cd proceedhub-backend
 
 **** Actualizar Beca por ID
 
-- URL: /api/scholarships/{id}
+- URL: /api/scholarships/update/{id}
 - Método: PUT
 - Parámetros de Ruta:
   - id (integer): El ID de la beca.
@@ -205,7 +205,7 @@ cd proceedhub-backend
 
 **** Eliminar Beca por ID
 
-- URL: /api/scholarships/{id}
+- URL: /api/scholarships/delete/{id}
 - Método: DELETE
 - Parámetros de Ruta:
   - id (integer): El ID de la beca.
