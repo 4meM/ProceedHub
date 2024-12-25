@@ -45,6 +45,7 @@ class CreateScholarshipTest {
                 .requirements(Set.of(new Requirement()))
                 .build();
 
+        createScholarship.execute(request);
 
         ArgumentCaptor<Scholarship> scholarshipCaptor = ArgumentCaptor.forClass(Scholarship.class);
         verify(scholarshipRepository).save(scholarshipCaptor.capture());
