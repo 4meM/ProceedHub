@@ -43,8 +43,9 @@ public class UserController {
             loginUser.execute(user.getUsername(), user.getPassword());
             String token = jwtUtil.generateToken(user.getUsername());
             Cookie cookie = new Cookie("token", token);
-            cookie.setHttpOnly(true);
+            cookie.setHttpOnly(false);
             cookie.setPath("/");
+            cookie.setMaxAge(60 * 60);
             response.addCookie(cookie);
             return new ResponseEntity<>("Login successful", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
