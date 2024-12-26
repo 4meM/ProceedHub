@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -56,5 +57,30 @@ class JpaScholarshipRepositoryTest {
 
         assertTrue(result.isPresent());
         assertEquals(id, result.get().getId());
+    }
+
+    @Test
+    void testFindAll() {
+        ScholarshipEntity scholarshipEntity1 = new ScholarshipEntity();
+        scholarshipEntity1.setId("id1");
+        ScholarshipEntity scholarshipEntity2 = new ScholarshipEntity();
+        scholarshipEntity2.setId("id2");
+
+        when(repository.findAll()).thenReturn(List.of(scholarshipEntity1, scholarshipEntity2));
+
+        List<Scholarship> result = jpaScholarshipRepository.findAll();
+
+        assertEquals(2, result.size());
+        assertEquals("id1", result.get(0).getId());
+        assertEquals("id2", result.get(1).getId());
+    }
+
+    @Test
+    void testDeleteById() {
+        String id = "id";
+
+        jpaScholarshipRepository.deleteById(id);
+
+        verify(repository).deleteById(id);
     }
 }
