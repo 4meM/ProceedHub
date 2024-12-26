@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/scholarships")
-@CrossOrigin
 public class ScholarshipController {
 
     private final CreateScholarship createScholarship;

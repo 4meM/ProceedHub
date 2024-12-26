@@ -20,3 +20,6 @@ server:
 jwt:
     secret: ${JWT_TOKEN}
     expiration: ${JWT_EXPIRATION}
+
+cors:
+  allowedOrigins: ${CORS_ALLOWED_ORIGINS}

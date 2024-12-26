@@ -6,6 +6,7 @@ import com.mistysoft.proceedhub.modules.user.application.RegisterUser;
 import com.mistysoft.proceedhub.modules.user.application.SearchUser;
 import com.mistysoft.proceedhub.modules.user.application.dto.UserDTO;
 import com.mistysoft.proceedhub.modules.user.domain.User;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin
 public class UserController {
 
     private final RegisterUser registerUser;
@@ -60,6 +60,29 @@ public class UserController {
             return new ResponseEntity<>(userDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/verifyToken")
+    public ResponseEntity<UserDTO> verifyToken(@CookieValue(value = "token", required = false) String token) {
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        try {
+            Claims claims = jwtUtil.getClaimsFromToken(token);
+            String username = claims.getSubject();
+            Optional<User> userFound = searchUser.findByUsername(username);
+
+            if (userFound.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
+            User user = userFound.get();
+            UserDTO userDTO = new UserDTO(user);
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 }
