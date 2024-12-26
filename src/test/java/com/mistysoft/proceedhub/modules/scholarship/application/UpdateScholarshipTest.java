@@ -1,6 +1,7 @@
 package com.mistysoft.proceedhub.modules.scholarship.application;
 
 import com.mistysoft.proceedhub.modules.scholarship.domain.IScholarshipRepository;
+import com.mistysoft.proceedhub.modules.scholarship.domain.Requirement;
 import com.mistysoft.proceedhub.modules.scholarship.domain.Scholarship;
 import com.mistysoft.proceedhub.modules.scholarship.application.dto.ScholarshipDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,5 +79,271 @@ class UpdateScholarshipTest {
         when(scholarshipRepository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class, () -> updateScholarship.execute(request, id));
+    }
+
+    @Test
+    void testUpdateScholarshipWithNullTitle() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .title("Old Title")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .title(null)
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old Title", result.getTitle());
+    }
+
+    @Test
+    void testUpdateScholarshipWithBlankTitle() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .title("Old Title")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .title("")
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old Title", result.getTitle());
+    }
+
+    @Test
+    void testUpdateScholarshipWithNullDescription() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .description("Old Description")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .description(null)
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old Description", result.getDescription());
+    }
+
+    @Test
+    void testUpdateScholarshipWithBlankDescription() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .description("Old Description")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .description("")
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old Description", result.getDescription());
+    }
+
+    @Test
+    void testUpdateScholarshipWithNullDate() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .date(ZonedDateTime.now().minusDays(1))
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .date(null)
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals(existingScholarship.getDate(), result.getDate());
+    }
+
+    @Test
+    void testUpdateScholarshipWithNullImage() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .image("Old Image")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .image(null)
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old Image", result.getImage());
+    }
+
+    @Test
+    void testUpdateScholarshipWithBlankImage() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .image("Old Image")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .image("")
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old Image", result.getImage());
+    }
+
+    @Test
+    void testUpdateScholarshipWithNullCountry() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .country("Old Country")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .country(null)
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old Country", result.getCountry());
+    }
+
+    @Test
+    void testUpdateScholarshipWithBlankCountry() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .country("Old Country")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .country("")
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old Country", result.getCountry());
+    }
+
+    @Test
+    void testUpdateScholarshipWithNullContinent() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .continent("Old Continent")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .continent(null)
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old Continent", result.getContinent());
+    }
+
+    @Test
+    void testUpdateScholarshipWithBlankContinent() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .continent("Old Continent")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .continent("")
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old Continent", result.getContinent());
+    }
+
+    @Test
+    void testUpdateScholarshipWithNullMoreInfo() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .moreInfo("Old More Info")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .moreInfo(null)
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old More Info", result.getMoreInfo());
+    }
+
+    @Test
+    void testUpdateScholarshipWithBlankMoreInfo() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .moreInfo("Old More Info")
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .moreInfo("")
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals("Old More Info", result.getMoreInfo());
+    }
+
+    @Test
+    void testUpdateScholarshipWithNullRequirements() {
+        String id = UUID.randomUUID().toString();
+        Scholarship existingScholarship = Scholarship.builder()
+                .id(id)
+                .requirements(Set.of(new Requirement()))
+                .build();
+
+        ScholarshipDTO request = ScholarshipDTO.builder()
+                .requirements(null)
+                .build();
+
+        when(scholarshipRepository.findById(id)).thenReturn(Optional.of(existingScholarship));
+
+        Scholarship result = updateScholarship.execute(request, id);
+
+        assertEquals(existingScholarship.getRequirements(), result.getRequirements());
     }
 }
