@@ -19,7 +19,7 @@
 - Muñoz Curi, Giomar Danny
 - Sumire Ramos, Marko Julio
 - Taipe Saraza, Christian Daniel
-- Zavalaga Orozco, Russell Vanessa
+- Zavalaga Orozco, Rushell Vanessa
 
 ## **Propósito del Proyecto**
 
@@ -35,11 +35,77 @@ El backend sigue una arquitectura basada en Domain-Driven Design (DDD), estructu
 - **Capa de Infraestructura:** Integra la persistencia de datos, servicios externos, y configuraciones de seguridad.
 El diseño sigue principios de separación de responsabilidades y extensibilidad para facilitar futuras integraciones. Se emplea un sistema de base de datos relacional (SQL), utilizando PostgreSQL como base de datos principal y Hibernate como framework ORM para gestionar la persistencia. Para pruebas, se incluye H2 como base de datos embebida.
 
+![](img/hexagonalArch.jpg)
+
+```
+main.java.com.mistysoft.proceedhub
+│   ProceedHubApplication.java
+│
+├───apps
+│   └───backend
+│           ScholarshipController.java
+│           UserController.java
+│
+└───modules
+    ├───scholarship
+    │   ├───application
+    │   │   │   CreateScholarship.java
+    │   │   │   DeleteScholarship.java
+    │   │   │   GetAllScholarships.java
+    │   │   │   SearchScholarship.java
+    │   │   │   UpdateScholarship.java
+    │   │   │
+    │   │   └───dto
+    │   │           ScholarshipDTO.java
+    │   │
+    │   ├───domain
+    │   │       IScholarshipRepository.java
+    │   │       Requirement.java
+    │   │       Scholarship.java
+    │   │
+    │   └───infrastructure
+    │           ISpringDataScholarshipRepository.java
+    │           JpaScholarshipRepository.java
+    │           ScholarshipEntity.java
+    │           ScholarshipMapper.java
+    │
+    ├───shared
+    │   ├───config
+    │   │       SecurityConfig.java
+    │   │       WebConfig.java
+    │   │
+    │   └───security
+    │           JwtUtil.java
+    │
+    └───user
+        ├───application
+        │   │   LoginUser.java
+        │   │   RegisterUser.java
+        │   │   SearchUser.java
+        │   │
+        │   └───dto
+        │           UserDTO.java
+        │
+        ├───domain
+        │       IUserRepository.java
+        │       Role.java
+        │       User.java
+        │       UserId.java
+        │
+        └───infrastructure
+                ISpringDataUserRepository.java
+                JpaUserRepository.java
+                UserEntity.java
+                UserMapper.java
+```
 ### Funcionalidades principales
 
 #### Gestión de usuarios
 
-- Registro, inicio de sesión y administración de roles.
+- **Registro de Usuarios**
+![](img/Register.png)
+- **Inicio de sesión**
+![](img/Login.png)
 
 #### Seguridad
 
@@ -182,19 +248,24 @@ pipeline {
 ```
 
 ### Construcción Automática
+En esta etapa de se construye la aplicacion del backend previamente clonado.
 
 **Herramienta:** Gradle
 
 ```groovy
-task build {
-    dependsOn 'clean', 'assemble'
-    doLast {
-        println 'Building ProceedHub application...'
-        copy {
-            from 'build/libs'
-            into 'deploy'
-            include '*.jar'
-        }
+stage("Git Checkout") {
+    steps {
+        echo "Cloning the develop branch..."
+        git branch: 'develop',
+            changelog: false,
+            poll: false,
+            url: 'https://github.com/Natzgun/ProceedHub'
+    }
+}
+stage('Build') {
+    steps {
+        echo 'Building the application...'
+        sh './gradlew clean build'
     }
 }
 ```
@@ -213,25 +284,40 @@ sonar.java.libraries=build/libs/*.jar
 ```
 
 ### Pruebas Unitarias
+Para la implementacion de las pruebas unitarias se considero verificacion por caja blanca con cobertura de decicion, para ello fue necesario identificar todas los caminos de ejecucion segun la complejidad ciclomatica de los metodos:
 
 **Herramientas:** JUnit + Mockito
+**Metodo a probar:** UpdateScholarship
 
+- La complejidad ciclomatica de este metodo es 14:
+![](img/updateScholarship.png)
+
+- Por lo tanto se implementan 14 casos de prueba:
+![](img/updateScholarTestCases.png)
 ```java
 @Test
-void testScholarshipCreation() {
-    Scholarship scholarship = new Scholarship();
-    scholarship.setTitle("Test Scholarship");
-    scholarship.setDescription("Description");
-    
-    when(scholarshipRepository.save(any(Scholarship.class)))
-        .thenReturn(scholarship);
-    
-    Scholarship saved = scholarshipService.create(scholarship);
-    assertEquals("Test Scholarship", saved.getTitle());
+void testUpdateScholarshipNotFound() {
+    String id = UUID.randomUUID().toString();
+    ScholarshipDTO request = ScholarshipDTO.builder().build();
+    when(scholarshipRepository.findById(id)).thenReturn(Optional.empty());
+
+    assertThrows(IllegalArgumentException.class, () -> updateScholarship.execute(request, id));
 }
 ```
 
 ### Pruebas Funcionales
+Para las pruebas funcionales se usaron metodos de caja negra:
+
+**Diseño de Casos de Prueba**
+| **Funcionalidad** | **Caso de Prueba**                | **Descripción**                                                                 | **Resultado Esperado**                                                  |
+|--------------------|-----------------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| Login              | Login Exitoso                   | Verificar inicio de sesión con credenciales válidas.                           | Redirección exitosa al perfil del usuario.                              |
+| Login              | Credenciales Incorrectas        | Probar inicio de sesión con email o contraseña incorrectos.                    | Mostrar mensaje de error indicando credenciales inválidas.              |
+| Login              | Campos Vacíos                   | Intentar iniciar sesión sin completar los campos requeridos.                   | Mostrar mensaje de error indicando que los campos son obligatorios.     |
+| Login              | Bloqueo tras Intentos Fallidos  | Realizar múltiples intentos fallidos consecutivos.                             | Bloqueo del usuario y mensaje de advertencia.                           |
+| Registro           | Registro Exitoso                | Completar el formulario de registro con datos válidos y únicos.                | Redirección exitosa a la página de becas.                               |
+| Registro           | Email Existente                 | Intentar registrarse con un email ya registrado.                               | Mostrar mensaje de error indicando que el email ya está registrado.     |
+
 
 **Herramienta:** Selenium
 
@@ -268,7 +354,7 @@ attacks:
 
 **Herramienta:** Apache JMeter
 
-#### Casos de prueba
+#### **Casos de prueba**
 | Escenario de prueba     | HTTP Request     | Usuarios     | Tiempo de respuesta aceptable |
 |-------------------------|------------------|--------------|------------------------------|
 | TestGetAllScholarships  | **GET:** http://localhost:8086/api/scholarships/get_all   | 10 | 2s |
@@ -324,6 +410,7 @@ Para actualizar una beca se uso un contador, *counter_id*, dentro del cuerpo del
 
 ## **Gestión de Tareas: Github Project**
 ![github project](img/githubProject.png) 
+[Link del Proyecto](https://github.com/users/Natzgun/projects/2/views/1)
 
 **Issue #30: UpdateScholarshipTest Coverage Analysis**
 
@@ -332,7 +419,7 @@ Para actualizar una beca se uso un contador, *counter_id*, dentro del cuerpo del
 - **Descripción:**
   - Se requiere agregar más casos de prueba para la clase "UpdateScholarshipTest" con el objetivo de aumentar la cobertura de las pruebas unitarias.
 - **Código Afectado:** UpdateScholarship.execute()
-```
+```java
 public Scholarship execute(ScholarshipDTO request, String id) {
     Optional<Scholarship> updatedScholarship = scholarshipRepository.findById(id);
     if(updatedScholarship.isEmpty()) {
@@ -364,7 +451,7 @@ public Scholarship execute(ScholarshipDTO request, String id) {
 - **Descripción:**
   - Se requiere agregar pruebas unitarias para los métodos 'findAll' y 'deleteById' de "JpaScholarshipRepository".
 - **Código Afectado:** 
-```
+```java
 @Override
 public List<Scholarship> findAll() {
     return repository.findAll()
