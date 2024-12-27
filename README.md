@@ -114,7 +114,17 @@ main.java.com.mistysoft.proceedhub
 
 #### Gestión de becas
 
-- Creación, consulta, actualización y eliminación de información de becas.
+- **Listado de becas disponibles.**
+![](img/userlistScholarships.jpg)
+
+- **Listado de becas para el administrador**
+![](img/listScholarships.jpg)
+
+- **Creacion de becas**
+![](img/createScholarship.jpg)
+
+- **Actualizacion de becas**
+![](img/updateScholarship.jpg)
 
 ## **Tecnologías**
 
@@ -180,70 +190,74 @@ El pipeline automatiza el proceso de construcción, pruebas y análisis estátic
 
 ```groovy
 pipeline {
-    agent any
-    tools {
-        jdk 'JAVA'
-        gradle 'gradle'
+  agent any
+
+  tools {
+    jdk 'JAVA'
+    gradle 'gradle'
+  }
+
+  environment {
+    DB_URL = credentials('ProceedHub-db-url')
+    DB_USERNAME = credentials('ProceedHub-db-username')
+    DB_PASSWORD = credentials('ProceedHub-db-password')
+    JWT_EXPIRATION = credentials('ProceedHub-jwt-expiration')
+    JWT_TOKEN = credentials('ProceedHub-jwt-token')
+    PORT = credentials('ProceedHub-port')
+    SCANNER_HOME = tool 'sonar-scanner'
+    DOCKERHUB_CREDENTIALS = credentials('natzgun-dockerhub')
+    CORS_ALLOWED_ORIGINS = 'http://localhost:5173'
+  }
+
+  stages {
+    stage("Git Checkout") {
+      steps {
+        echo "Cloning the develop branch..."
+        git branch: 'develop',
+                changelog: false,
+                poll: false,
+                url: 'https://github.com/Natzgun/ProceedHub'
+      }
     }
-    environment {
-        DB_URL = credentials('ProceedHub-db-url')
-        DB_USERNAME = credentials('ProceedHub-db-username')
-        DB_PASSWORD = credentials('ProceedHub-db-password')
-        JWT_EXPIRATION = credentials('ProceedHub-jwt-expiration')
-        JWT_TOKEN = credentials('ProceedHub-jwt-token')
-        PORT = credentials('ProceedHub-port')
-        SCANNER_HOME = tool 'sonar-scanner'
+    stage('Build') {
+      steps {
+        echo 'Building the application...'
+        sh './gradlew clean build'
+      }
     }
-    stages {
-        stage("Git Checkout") {
-            steps {
-                echo "Cloning the develop branch..."
-                git branch: 'develop',
-                    changelog: false,
-                    poll: false,
-                    url: 'https://github.com/Natzgun/ProceedHub'
-            }
-        }
-        stage('Build') {
-            steps {
-                echo 'Building the application...'
-                sh './gradlew clean build'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-                sh './gradlew test'
-            }
-        }
-        stage('Copy dependency for Sonarqube') {
-            steps {
-                echo 'Building the application...'
-                sh './gradlew copyDependencies'
-            }
-        }
-        stage("SonarQube Analysis ") {
-            steps {
-                script {
-                    withSonarQubeEnv('sonarqube-proceedhub') {
-                        sh """$SCANNER_HOME/bin/sonar-scanner \
+    stage('Test') {
+      steps {
+        echo 'Running tests...'
+        sh './gradlew test'
+      }
+    }
+    stage('Copy dependecy for Sonarqube') {
+      steps {
+        echo 'Building the application...'
+        sh './gradlew copyDependencies'
+      }
+    }
+    stage("SonarQube Analysis ") {
+      steps {
+        script {
+          withSonarQubeEnv('sonarqube-proceedhub') {
+            sh """$SCANNER_HOME/bin/sonar-scanner \
                         -Dsonar.projectKey=ProceedHub \
                         -Dsonar.projectName=ProceedHub \
                         -Dsonar.sources=. \
-                        -Dsonar.tests=src/test/java \
                         -Dsonar.java.libraries=build/libs/*.jar,build/classes/java/main \
                         -Dsonar.java.binaries=. """
-                    }
-                }
-            }
+          }
         }
-        stage('Run Application') {
-            steps {
-                echo 'Starting the application...'
-                sh 'java -jar build/libs/ProceedHub-0.0.1-SNAPSHOT.jar'
-            }
-        }
+
+      }
     }
+    stage('Docker Build and Deploy in Render') {
+      steps {
+        sh 'docker build --platform linux/amd64 -t natzgun/proceedhub-aplication-ddd:latest .'
+      }
+    }
+  }
 }
 ```
 
@@ -317,6 +331,7 @@ Para las pruebas funcionales se usaron metodos de caja negra:
 | Login              | Bloqueo tras Intentos Fallidos  | Realizar múltiples intentos fallidos consecutivos.                             | Bloqueo del usuario y mensaje de advertencia.                           |
 | Registro           | Registro Exitoso                | Completar el formulario de registro con datos válidos y únicos.                | Redirección exitosa a la página de becas.                               |
 | Registro           | Email Existente                 | Intentar registrarse con un email ya registrado.                               | Mostrar mensaje de error indicando que el email ya está registrado.     |
+
 
 
 **Herramienta:** Selenium
