@@ -27,6 +27,7 @@ jobs:
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
+
         env:
           DB_URL: ${{ secrets.DB_URL}}
           DB_USERNAME: ${{ secrets.DB_USERNAME}}
