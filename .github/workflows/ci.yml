@@ -28,5 +28,13 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         env:
+          DB_URL: ${{ secrets.DB_URL}}
+          DB_USERNAME: ${{ secrets.DB_USERNAME}}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD}}
+          JWT_EXPIRATION: ${{ secrets.JWT_EXPIRATION}}
+          JWT_TOKEN: ${{ secrets.JWT_TOKEN}}
+          PORT: ${{ secrets.PORT}}
+          CORS_ALLOWED_ORIGINS: ${{ secrets.CORS_ALLOWED_ORIGINS}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
