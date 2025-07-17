@@ -80,4 +80,10 @@ tasks.jacocoTestReport {
         html.required = true
     }
 }
-
+// Mostrar output de tests (println, errores, etc.)
+tasks.withType(Test).configureEach {
+    testLogging {
+        events "passed", "skipped", "failed", "standard_out", "standard_error"
+        showStandardStreams = true
+    }
+}
