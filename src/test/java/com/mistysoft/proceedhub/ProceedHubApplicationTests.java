@@ -8,11 +8,10 @@ class ProceedHubApplicationTests {
 
     @Test
     void contextLoads() {
-        // Este metodo no esta implementado porque no hay logica de prueba especifica,
-        // solo se asegura que el contexto de la aplicacion se inicie correctamente al ejecutar la aplicacion.
-        if (Boolean.getBoolean("thorwException")) {
-            throw new UnsupportedOperationException("Metodo no implementado (No sea cargó contextLoad)");
-        }
+        System.out.println("🔍 DEBUG ENVIRONMENT VARIABLES:");
+        System.out.println("🔧 PORT: " + System.getenv("PORT"));
+        System.out.println("🔐 JWT_TOKEN: " + System.getenv("JWT_TOKEN"));
+        System.out.println("⏱️ JWT_EXPIRATION: " + System.getenv("JWT_EXPIRATION"));
     }
 
 }
