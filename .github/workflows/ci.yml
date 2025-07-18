@@ -47,9 +47,9 @@ jobs:
             -Dsonar.projectKey=4meM_ProceedHub
             -Dsonar.organization=4mem
             -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.java.binaries=build
-            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
             -Dsonar.sources=.
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
             -Dsonar.java.libraries=build/libs/*.jar,build/classes/java/main
+            -Dsonar.java.binaries=.
 
 
